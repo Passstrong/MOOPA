@@ -9,9 +9,9 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-
   File file;
 
+  String urlAvatar, name, lastName, gender, age, birth, email, password, type;
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +31,7 @@ class _RegisterState extends State<Register> {
               buildEmail(),
               buildPassword(),
               buildType(),
-              
-
-              
+              buildRaisedButton()
             ],
           ),
         ),
@@ -41,37 +39,51 @@ class _RegisterState extends State<Register> {
     );
   }
 
+  Container buildRaisedButton() => Container(
+        width: MediaQuery.of(context).size.width,
+        child: RaisedButton.icon(color: Colors.deepOrange,
+            onPressed: (){},
+            icon: Icon(Icons.cloud_upload,color: Colors.purple,),
+            label: Text('register', style:  TextStyle(color: Colors.yellow),)),
+      );
+
   Container buildCamera() {
     return Container(
-              width: 250,
-              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(icon: Icon(Icons.add_a_photo), onPressed: () => chooseImage(ImageSource.camera),),
-                  IconButton(icon: Icon(Icons.add_photo_alternate), onPressed: () => chooseImage(ImageSource.gallery),),
-                ],
-              ),
-            );
+      width: 250,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            icon: Icon(Icons.add_a_photo),
+            onPressed: () => chooseImage(ImageSource.camera),
+          ),
+          IconButton(
+            icon: Icon(Icons.add_photo_alternate),
+            onPressed: () => chooseImage(ImageSource.gallery),
+          ),
+        ],
+      ),
+    );
   }
 
-  Future<Null> chooseImage(ImageSource source)async{
+  Future<Null> chooseImage(ImageSource source) async {
     try {
-      var result = await ImagePicker().getImage(source: source, maxWidth: 800,maxHeight: 800,);
+      var result = await ImagePicker().getImage(
+        source: source,
+        maxWidth: 800,
+        maxHeight: 800,
+      );
       setState(() {
         file = File(result.path);
       });
-
-    } catch (e) {
-    }
-
-
-
+    } catch (e) {}
   }
 
   Container buildAvater() {
     return Container(
       width: 250,
       height: 250,
-      child: file == null ? Image.asset('images/avatar.png') : Image.file(file) ,
+      child: file == null ? Image.asset('images/avatar.png') : Image.file(file),
     );
   }
 
@@ -79,6 +91,7 @@ class _RegisterState extends State<Register> {
     return Container(
       margin: EdgeInsets.only(top: 16, bottom: 16),
       child: TextField(
+        onChanged: (value) => name = value.trim(),
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: 'Name :',
@@ -92,6 +105,7 @@ class _RegisterState extends State<Register> {
     return Container(
       margin: EdgeInsets.only(top: 16, bottom: 16),
       child: TextField(
+        onChanged: (value) => lastName = value.trim(),
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: 'LastName :',
@@ -100,10 +114,12 @@ class _RegisterState extends State<Register> {
       ),
     );
   }
+
   Container buildGender() {
     return Container(
       margin: EdgeInsets.only(top: 16, bottom: 16),
       child: TextField(
+        onChanged: (value) => gender = value.trim(),
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: 'Gender :',
@@ -112,10 +128,12 @@ class _RegisterState extends State<Register> {
       ),
     );
   }
+
   Container buildAge() {
     return Container(
       margin: EdgeInsets.only(top: 16, bottom: 16),
       child: TextField(
+        onChanged: (value) => age = value.trim(),
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: 'Age :',
@@ -124,10 +142,12 @@ class _RegisterState extends State<Register> {
       ),
     );
   }
+
   Container buildBirth() {
     return Container(
       margin: EdgeInsets.only(top: 16, bottom: 16),
       child: TextField(
+        onChanged: (value) => birth = value.trim(),
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: 'Birth Day :',
@@ -136,10 +156,12 @@ class _RegisterState extends State<Register> {
       ),
     );
   }
+
   Container buildEmail() {
     return Container(
       margin: EdgeInsets.only(top: 16, bottom: 16),
       child: TextField(
+        onChanged: (value) => email = value.trim(),
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: 'E-mail :',
@@ -148,10 +170,12 @@ class _RegisterState extends State<Register> {
       ),
     );
   }
+
   Container buildPassword() {
     return Container(
       margin: EdgeInsets.only(top: 16, bottom: 16),
       child: TextField(
+        onChanged: (value) => password = value.trim(),
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: 'Password :',
@@ -160,10 +184,12 @@ class _RegisterState extends State<Register> {
       ),
     );
   }
+
   Container buildType() {
     return Container(
       margin: EdgeInsets.only(top: 16, bottom: 16),
       child: TextField(
+        onChanged: (value) => type = value.trim(),
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: 'Type :',
@@ -172,8 +198,6 @@ class _RegisterState extends State<Register> {
       ),
     );
   }
-
-
 }
 
 // Test
