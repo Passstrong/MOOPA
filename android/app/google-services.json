@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1001335641808",
+    "firebase_url": "https://moopa-f0605.firebaseio.com",
+    "project_id": "moopa-f0605",
+    "storage_bucket": "moopa-f0605.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001335641808:android:4cecfbe136807ca1e930d5",
+        "android_client_info": {
+          "package_name": "com.flutterthailand.tongmoopa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1001335641808-tikg5ggsm0vtlf8mn0temv1jsefjhpq1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXG6B2M6dvqXyuoRQWdeg--AL3XtwYInQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1001335641808-tikg5ggsm0vtlf8mn0temv1jsefjhpq1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
