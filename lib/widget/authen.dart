@@ -1,4 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:tongmoopa/utlity/normal_dialog.dart';
+import 'package:tongmoopa/widget/main_SOS.dart';
+import 'package:tongmoopa/widget/main_user.dart';
 import 'package:tongmoopa/widget/register.dart';
 
 class Authen extends StatefulWidget {
@@ -7,8 +13,55 @@ class Authen extends StatefulWidget {
 }
 
 class _AuthenState extends State<Authen> {
+  String user, password;
 
-  
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkLogin();
+  }
+
+  Future<Null> checkLogin() async {
+    await Firebase.initializeApp().then((value) async {
+      await FirebaseAuth.instance.authStateChanges().listen((event) async {
+        if (event != null) {
+          await FirebaseFirestore.instance
+              .collection('Type')
+              .doc(event.uid)
+              .snapshots()
+              .listen((event) {
+            String type = event.data()['Type'];
+            print('type = $type');
+            routeToService(type);
+          });
+        }
+      });
+    });
+  }
+
+  void routeToService(String type) {
+    switch (type) {
+      case 'User':
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MainUser(),
+            ),
+            (route) => false);
+        break;
+      case 'SOS':
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MainSOS(),
+            ),
+            (route) => false);
+        break;
+      default:
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +132,16 @@ class _AuthenState extends State<Authen> {
       margin: EdgeInsets.only(top: 16),
       width: 250,
       child: RaisedButton(
-          onPressed: null,
+          onPressed: () {
+            if (user == null ||
+                user.isEmpty ||
+                password == null ||
+                password.isEmpty) {
+              normalDialod(context, 'Have Space ? Please Fill Every Blank');
+            } else {
+              checkAuthen();
+            }
+          },
           child: Text(
             'login',
             style: TextStyle(
@@ -87,6 +149,27 @@ class _AuthenState extends State<Authen> {
             ),
           )),
     );
+  }
+
+  Future<Null> checkAuthen() async {
+    await Firebase.initializeApp().then((value) async {
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: user, password: password)
+          .then((value) async {
+        String uid = value.user.uid;
+        await FirebaseFirestore.instance
+            .collection('Type')
+            .doc(uid)
+            .snapshots()
+            .listen((event) {
+          String type = event.data()['Type'];
+
+          routeToService(type);
+        });
+      }).catchError((value) {
+        normalDialod(context, value.message);
+      });
+    });
   }
 
 // Test???shortkey..
@@ -100,6 +183,8 @@ class _AuthenState extends State<Authen> {
     return Container(
       margin: EdgeInsets.only(top: 16, bottom: 16),
       child: TextField(
+        onChanged: (value) => user = value.trim(),
+        keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: 'User :',
@@ -112,6 +197,8 @@ class _AuthenState extends State<Authen> {
   Container buildPassword() {
     return Container(
       child: TextField(
+        onChanged: (value) => password = value.trim(),
+        obscureText: true,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: 'Password :',

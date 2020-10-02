@@ -77,7 +77,7 @@ class _RegisterState extends State<Register> {
               color: Colors.purple,
             ),
             label: Text(
-              'register',
+              'Register',
               style: TextStyle(color: Colors.yellow),
             )),
       );
@@ -272,9 +272,9 @@ class _RegisterState extends State<Register> {
             .doc(uid)
             .set(userdata)
             .then((value) => Navigator.pop(context));
-      }).catchError((value) {
-        normalDialod(context, value.message);
       });
+    }).catchError((value) {
+      normalDialod(context, value.message);
     });
   }
 }
