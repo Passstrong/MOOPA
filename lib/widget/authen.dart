@@ -147,7 +147,7 @@ class _AuthenState extends State<Authen> {
             style: TextStyle(
               color: Colors.yellow.shade100,
             ),
-          )),
+          ),),
     );
   }
 
@@ -196,7 +196,7 @@ class _AuthenState extends State<Authen> {
 
   Container buildPassword() {
     return Container(
-      child: TextField(
+      child: TextFormField(
         onChanged: (value) => password = value.trim(),
         obscureText: true,
         decoration: InputDecoration(

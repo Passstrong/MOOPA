@@ -8,7 +8,7 @@ class MyStyle {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
-            decoration: BoxDecoration(color: Colors.red.shade700),
+            decoration: BoxDecoration(color: Colors.pink.shade300),
             child: ListTile(
               onTap: () async {
                 await Firebase.initializeApp().then((value) async {
@@ -24,11 +24,11 @@ class MyStyle {
               },
               leading: Icon(
                 Icons.exit_to_app,
-                color: Colors.white,
+                color: Colors.pink,
               ),
               title: Text(
                 'Sign Out',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.pink),
               ),
             ),
           ),
