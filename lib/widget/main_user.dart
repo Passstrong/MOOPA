@@ -5,13 +5,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:location/location.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:tongmoopa/utlity/drawer_header.dart';
-import 'package:tongmoopa/utlity/my_style.dart';
 import 'package:tongmoopa/utlity/scoped_models/app_model.dart';
 import 'package:tongmoopa/utlity/search_section.dart';
+import 'package:tongmoopa/widget/ads_request.dart';
+import 'package:tongmoopa/widget/drawer_bar.dart';
 import 'package:tongmoopa/widget/help_me.dart';
+import 'package:tongmoopa/widget/user_profile.dart';
 
 class MainUser extends StatefulWidget {
   @override
@@ -26,7 +26,6 @@ class _MainUserState extends State<MainUser> {
   @override
   void initState() {
     super.initState();
-    // getLocation();
     final user = ScopedModel.of<AppModel>(context, rebuildOnChange: false);
     readUserData(user);
   }
@@ -42,43 +41,17 @@ class _MainUserState extends State<MainUser> {
             .doc(uid)
             .snapshots()
             .listen((event) {
-          user.setName( event.data()['Name']);
-          user.setEmail( event.data()['Email']);
+          user.setName(event.data()['Name']);
+          user.setEmail(event.data()['Email']);
+          user.setBirth(event.data()['Birth']);
+          user.setGender(event.data()['Gender']);
+          user.setLastName(event.data()['LastName']);
+          user.setAge(event.data()['Age']);
+          user.setImage(event.data()['UrlAvatar']);
         });
       });
     });
   }
-
-  // Future<void> getLocation() async {
-  //   Location location = Location();
-
-  //   bool _serviceEnabled;
-  //   PermissionStatus _permissionGranted;
-  //   LocationData _locationData;
-
-  //   _serviceEnabled = await location.serviceEnabled();
-  //   if (!_serviceEnabled) {
-  //     _serviceEnabled = await location.requestService();
-  //     if (!_serviceEnabled) {
-  //       return;
-  //     }
-  //   }
-
-  //   _permissionGranted = await location.hasPermission();
-  //   if (_permissionGranted == PermissionStatus.denied) {
-  //     _permissionGranted = await location.requestPermission();
-  //     if (_permissionGranted != PermissionStatus.granted) {
-  //       return;
-  //     }
-  //   }
-
-  //   _locationData = await location.getLocation();
-
-  //   setState(() {
-  //     lat = _locationData.latitude;
-  //     long = _locationData.longitude;
-  //   });
-  // }
 
   int _current = 0;
 
@@ -146,35 +119,7 @@ class _MainUserState extends State<MainUser> {
         backgroundColor: Colors.blue[900],
       ),
       backgroundColor: Colors.blue.shade900,
-      drawer: Drawer(
-        child: Container(
-          color: Colors.blue[100],
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  AppDrawerHeader(),
-                  ListTile(
-                    leading: Icon(
-                      Icons.star,
-                      color: Colors.brown,
-                    ),
-                    title: Text(
-                      'ขอความช่วยเหลือ',
-                      style: TextStyle(color: Colors.brown),
-                    ),
-                    subtitle: Text(
-                      'คือ เมนูที่คุณสามารถส่งพิกัด และข้อความขอความช่วยเหลือได้',
-                      style: TextStyle(color: Colors.brown),
-                    ),
-                  ),
-                ],
-              ),
-              MyStyle().mySignOut(context),
-            ],
-          ),
-        ),
-      ),
+      drawer: DrawerBar(),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -216,17 +161,25 @@ class _MainUserState extends State<MainUser> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 FlatButton(
-                    onPressed: null,
-                    child: Icon(
-                      Icons.local_atm,
-                      color: Colors.yellow,
-                    )),
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => AdsRequest(),
+                    ),
+                  ),
+                  child: Icon(
+                    Icons.local_atm,
+                    color: Colors.yellow,
+                  ),
+                ),
                 FlatButton(
-                    onPressed: null,
-                    child: Icon(Icons.mail, color: Colors.yellow)),
+                  onPressed: null,
+                  child: Icon(Icons.mail, color: Colors.yellow),
+                ),
                 FlatButton(
-                    onPressed: null,
-                    child: Icon(Icons.notifications, color: Colors.yellow)),
+                  onPressed: null,
+                  child: Icon(Icons.notifications, color: Colors.yellow),
+                ),
               ],
             ),
             Padding(
@@ -235,35 +188,38 @@ class _MainUserState extends State<MainUser> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   GestureDetector(
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => HelpMe() ),),
-                    child:  Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.greenAccent,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0xFF22a99b),
-                          blurRadius: 35.0,
-                          spreadRadius: 0.0,
-                          offset: Offset(
-                            0.0,
-                            3.0,
-                          ),
-                        ),
-                      ],
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => HelpMe()),
                     ),
-                    child: Center(
-                      child: Text(
-                        "SOS",
-                        style: TextStyle(
-                          fontSize: 32.0,
-                          color: Colors.brown,
+                    child: Container(
+                      width: 200,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        color: Colors.greenAccent,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xFF22a99b),
+                            blurRadius: 35.0,
+                            spreadRadius: 0.0,
+                            offset: Offset(
+                              0.0,
+                              3.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Text(
+                          "SOS",
+                          style: TextStyle(
+                            fontSize: 32.0,
+                            color: Colors.brown,
+                          ),
                         ),
                       ),
                     ),
-                  ),
                   ),
                 ],
               ),
@@ -272,12 +228,14 @@ class _MainUserState extends State<MainUser> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 FlatButton(
-                    onPressed: null,
-                    child: Icon(Icons.people, color: Colors.yellow)),
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfile())),
+                  child: Icon(Icons.people, color: Colors.yellow),
+                ),
                 Container(),
                 FlatButton(
-                    onPressed: null,
-                    child: Icon(Icons.settings, color: Colors.yellow)),
+                  onPressed: null,
+                  child: Icon(Icons.settings, color: Colors.yellow),
+                ),
               ],
             ),
           ],

@@ -19,15 +19,3 @@ main()=>runApp(MyApp());
     ),);
   }
 }
-
-
-// Test
-// class MyApp2 extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: Authen(),
-//       theme: ThemeData(primarySwatch: Color.),
-//     );
-//   }
-// }
