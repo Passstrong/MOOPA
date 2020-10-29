@@ -113,7 +113,7 @@ class _MainUserState extends State<MainUser> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Main User',
+          'USER (class People)',
           style: TextStyle(color: Colors.pink[100]),
         ),
         backgroundColor: Colors.blue[900],
@@ -228,7 +228,8 @@ class _MainUserState extends State<MainUser> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 FlatButton(
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfile())),
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => UserProfile())),
                   child: Icon(Icons.people, color: Colors.yellow),
                 ),
                 Container(),

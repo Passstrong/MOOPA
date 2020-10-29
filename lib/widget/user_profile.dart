@@ -140,7 +140,7 @@ class _UserProfileState extends State<UserProfile> {
 
 
 
-  Container buildAvater() {
+  Container buildAvatar() {
     final user = ScopedModel.of<AppModel>(context, rebuildOnChange: true);
     return Container(
       width: 250,
@@ -289,7 +289,7 @@ class _UserProfileState extends State<UserProfile> {
         child: Column(
           children: <Widget>[
             SearchHome(),
-            buildAvater(),
+            buildAvatar(),
             buildCamera(),
             buildName(),
             buildLastName(),

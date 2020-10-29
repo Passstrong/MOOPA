@@ -7,6 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tongmoopa/utlity/normal_dialog.dart';
+import 'package:tongmoopa/model/list_item_str.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -16,7 +17,45 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   File file;
 
-  String urlAvatar, name, lastName, gender, age, birth, email, password, type;
+  String urlAvatar,
+      name,
+      lastName,
+      gender,
+      age,
+      birth,
+      email,
+      password,
+      type = 'User';
+
+  List<ListItem> _dropdownItems = [
+    ListItem("User", "User"),
+    ListItem("SOS", "SOS"),
+  ];
+
+  List<DropdownMenuItem<ListItem>> _dropdownMenuItems;
+  ListItem _selectedItem;
+
+  void initState() {
+    super.initState();
+    _dropdownMenuItems = buildDropDownMenuItems(_dropdownItems);
+    _selectedItem = _dropdownMenuItems[0].value;
+  }
+
+  List<DropdownMenuItem<ListItem>> buildDropDownMenuItems(List listItems) {
+    List<DropdownMenuItem<ListItem>> items = List();
+    for (ListItem listItem in listItems) {
+      items.add(
+        DropdownMenuItem(
+          child: Text(
+            listItem.name,
+            // style: TextStyle(color: Colors.red),
+          ),
+          value: listItem,
+        ),
+      );
+    }
+    return items;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +65,7 @@ class _RegisterState extends State<Register> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              buildAvater(),
+              buildAvatar(),
               buildCamera(),
               buildName(),
               buildLastName(),
@@ -115,7 +154,7 @@ class _RegisterState extends State<Register> {
     } catch (e) {}
   }
 
-  Container buildAvater() {
+  Container buildAvatar() {
     return Container(
       width: 250,
       height: 250,
@@ -226,14 +265,25 @@ class _RegisterState extends State<Register> {
   Container buildType() {
     return Container(
       margin: EdgeInsets.only(top: 16, bottom: 16),
-      child: TextField(
-        onChanged: (value) => type = value.trim(),
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: 'Type :',
-          suffixIcon: Icon(Icons.description),
-        ),
+      child: DropdownButton<ListItem>(
+        hint: Text('User'),
+        value: _selectedItem,
+        items: _dropdownMenuItems,
+        onChanged: (value) {
+          setState(() {
+            _selectedItem = value;
+            type = value.value.trim();
+          });
+        },
       ),
+      // child: TextField(
+      //   onChanged: (value) => type = value.trim(),
+      //   decoration: InputDecoration(
+      //     border: OutlineInputBorder(),
+      //     labelText: 'Type :',
+      //     suffixIcon: Icon(Icons.description),
+      //   ),
+      // ),
     );
   }
 
@@ -279,4 +329,3 @@ class _RegisterState extends State<Register> {
     });
   }
 }
-
