@@ -22,7 +22,7 @@ class AdsRequest extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Name:'),
+            Text('Name:' , style: TextStyle(color: Colors.yellow),),
             TextFormField(
               controller: nameController,
               validator: (value) {
@@ -34,7 +34,7 @@ class AdsRequest extends StatelessWidget {
               },
               onSaved: (value) => {},
             ),
-            Text('Email:'),
+            Text('Email:' , style: TextStyle(color: Colors.yellow),),
             TextFormField(
               keyboardType: TextInputType.emailAddress,
               controller: emailController,
@@ -47,7 +47,7 @@ class AdsRequest extends StatelessWidget {
               },
               onSaved: (value) => {},
             ),
-            Text('Tel:'),
+            Text('Tel:' , style: TextStyle(color: Colors.yellow),),
             TextFormField(
               keyboardType: TextInputType.phone,
               controller: telephoneController,
@@ -60,7 +60,7 @@ class AdsRequest extends StatelessWidget {
               },
               onSaved: (value) => {},
             ),
-            Text('Message:'),
+            Text('Message:' , style: TextStyle(color: Colors.yellow),),
             TextFormField(
               maxLines: 8,
               keyboardType: TextInputType.multiline,
@@ -126,7 +126,7 @@ class AdsRequest extends StatelessWidget {
             SearchHome(),
             Text(
               'โฆษณากับเรา',
-              style: TextStyle(fontSize: 24.0),
+              style: TextStyle(fontSize: 24.0 , color: Colors.yellow),
             ),
             formData(),
             Container(
@@ -134,7 +134,7 @@ class AdsRequest extends StatelessWidget {
               height: 75,
               child: RaisedButton(
                 onPressed: () => validate(),
-                child: Text('Submit'),
+                child: Text('Submit' , style: TextStyle(color: Colors.teal[300]),),
               ),
             ),
           ],

@@ -19,11 +19,11 @@ class DrawerBar extends StatelessWidget {
                       color: Colors.brown,
                     ),
                     title: Text(
-                      'ขอความช่วยเหลือ',
+                      'Help Me list',
                       style: TextStyle(color: Colors.brown),
                     ),
                     subtitle: Text(
-                      'คือ เมนูที่คุณสามารถส่งพิกัด และข้อความขอความช่วยเหลือได้',
+                      'Use Full Version (next Version 2.0 coming)',
                       style: TextStyle(color: Colors.brown),
                     ),
                   ),
