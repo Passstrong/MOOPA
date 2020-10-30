@@ -17,16 +17,15 @@ class _AuthenState extends State<Authen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     checkLogin();
   }
 
   Future<Null> checkLogin() async {
     await Firebase.initializeApp().then((value) async {
-      await FirebaseAuth.instance.authStateChanges().listen((event) async {
+      FirebaseAuth.instance.authStateChanges().listen((event) async {
         if (event != null) {
-          await FirebaseFirestore.instance
+          FirebaseFirestore.instance
               .collection('Type')
               .doc(event.uid)
               .snapshots()
@@ -44,19 +43,21 @@ class _AuthenState extends State<Authen> {
     switch (type) {
       case 'User':
         Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MainUser(),
-            ),
-            (route) => false);
+          context,
+          MaterialPageRoute(
+            builder: (context) => MainUser(),
+          ),
+          (route) => false,
+        );
         break;
       case 'SOS':
         Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MainSOS(),
-            ),
-            (route) => false);
+          context,
+          MaterialPageRoute(
+            builder: (context) => MainSOS(),
+          ),
+          (route) => false,
+        );
         break;
       default:
     }
@@ -65,6 +66,7 @@ class _AuthenState extends State<Authen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Container(
         decoration: BoxDecoration(
           gradient: RadialGradient(
@@ -76,25 +78,21 @@ class _AuthenState extends State<Authen> {
             center: Alignment(0, -0.3),
           ),
         ),
-        child: Stack(
-          children: [
-            Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    buildLogo(),
-                    buildText(),
-                    buildUser(),
-                    buildPassword(),
-                    // buildLogin() ???
-                    buildContainer()
-                  ],
-                ),
-              ),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                buildLogo(),
+                buildText(),
+                buildUser(),
+                buildPassword(),
+                // buildLogin() ???
+                buildContainer(),
+                buildNewRegis(),
+              ],
             ),
-            buildNewRegis()
-          ],
+          ),
         ),
       ),
     );
@@ -132,22 +130,23 @@ class _AuthenState extends State<Authen> {
       margin: EdgeInsets.only(top: 16),
       width: 250,
       child: RaisedButton(
-          onPressed: () {
-            if (user == null ||
-                user.isEmpty ||
-                password == null ||
-                password.isEmpty) {
-              normalDialod(context, 'Have Space ? Please Fill Every Blank');
-            } else {
-              checkAuthen();
-            }
-          },
-          child: Text(
-            'login',
-            style: TextStyle(
-              color: Colors.yellow.shade100,
-            ),
-          ),),
+        onPressed: () {
+          if (user == null ||
+              user.isEmpty ||
+              password == null ||
+              password.isEmpty) {
+            normalDialod(context, 'Have Space ? Please Fill Every Blank');
+          } else {
+            checkAuthen();
+          }
+        },
+        child: Text(
+          'login',
+          style: TextStyle(
+            color: Colors.yellow.shade100,
+          ),
+        ),
+      ),
     );
   }
 
@@ -157,7 +156,7 @@ class _AuthenState extends State<Authen> {
           .signInWithEmailAndPassword(email: user, password: password)
           .then((value) async {
         String uid = value.user.uid;
-        await FirebaseFirestore.instance
+        FirebaseFirestore.instance
             .collection('Type')
             .doc(uid)
             .snapshots()
@@ -171,13 +170,6 @@ class _AuthenState extends State<Authen> {
       });
     });
   }
-
-// Test???shortkey..
-// class Name { ???
-  // Widget
-// }
-
-// Container ???
 
   Container buildUser() {
     return Container(
@@ -225,6 +217,3 @@ class _AuthenState extends State<Authen> {
     );
   }
 }
-
-// buildLogin() { ???
-// }

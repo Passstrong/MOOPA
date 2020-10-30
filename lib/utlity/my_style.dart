@@ -11,16 +11,18 @@ class MyStyle {
             decoration: BoxDecoration(color: Colors.pink.shade300),
             child: ListTile(
               onTap: () async {
-                await Firebase.initializeApp().then((value) async {
-                  await FirebaseAuth.instance
-                      .signOut()
-                      .then((value) => Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Authen(),
-                          ),
-                          (route) => false));
-                });
+                await Firebase.initializeApp().then(
+                  (value) async {
+                    await FirebaseAuth.instance.signOut().then(
+                          (value) => Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Authen(),
+                              ),
+                              (route) => false),
+                        );
+                  },
+                );
               },
               leading: Icon(
                 Icons.exit_to_app,

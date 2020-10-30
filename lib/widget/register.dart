@@ -9,6 +9,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:tongmoopa/utlity/normal_dialog.dart';
 import 'package:tongmoopa/model/list_item_str.dart';
 
+import '../model/list_item_str.dart';
+
 class Register extends StatefulWidget {
   @override
   _RegisterState createState() => _RegisterState();
@@ -25,6 +27,9 @@ class _RegisterState extends State<Register> {
       birth,
       email,
       password,
+      department,
+      province,
+      sosDepartment,
       type = 'User';
 
   List<ListItem> _dropdownItems = [
@@ -32,13 +37,50 @@ class _RegisterState extends State<Register> {
     ListItem("SOS", "SOS"),
   ];
 
-  List<DropdownMenuItem<ListItem>> _dropdownMenuItems;
-  ListItem _selectedItem;
+  List<ListItem> _proviceList = [
+    ListItem("กรุงเทพ", "กรุงเทพ"),
+    ListItem("สมุทรปาการ", "สมุทรปาการ"),
+    ListItem("สมุทรสาคร", "สมุทรสาคร"),
+    ListItem("สมุทรสงคราม", "สมุทรสงคราม"),
+    ListItem("ปทุมธานี", "ปทุมธานี"),
+    ListItem("นนทบุรี", "นนทบุรี"),
+    ListItem("พระนครศรีอยุทยา", "พระนครศรีอยุทยา"),
+    ListItem("นครปฐม", "นครปฐม"),
+    ListItem("สมุทรสาคร", "สมุทรสาคร"),
+    ListItem("สมุทรสงคราม", "สมุทรสงคราม"),
+    ListItem("ปทุมธานี", "ปทุมธานี"),
+    ListItem("นนทบุรี", "นนทบุรี"),
+  ];
 
+  List<ListItem> _sosItems = [
+    ListItem("***กรุณาเลือกหมวดหมู่***", "***กรุณาเลือกหมวดหมู่***"),
+    ListItem("แจ้งความตำรวจ", "แจ้งความตำรวจ"),
+    ListItem("รถพยาบาล", "รถพยาบาล"),
+    ListItem("รถดับเพลิง", "รถดับเพลิง"),
+    ListItem("ช่วยชีวิต - ทางน้ำ", "ช่วยชีวิต - ทางน้ำ"),
+    ListItem("ช่วยชีวิต - ทางบก", "ช่วยชีวิต - ทางบก"),
+    ListItem("มูลนิธิกู้ภัย", "มูลนิธิกู้ภัย"),
+    ListItem("ขอความช่วยเหลือจากคนใกล้ฉัน (5 Km)",
+        "ขอความช่วยเหลือจากคนใกล้ฉัน (5 Km)"),
+    ListItem("เรียกประกันภัย - รถยนต์", "เรียกประกันภัย - รถยนต์"),
+    ListItem("เรียกประกันภัย - สุขภาพ", "เรียกประกันภัย - สุขภาพ"),
+    ListItem("อื่นๆ", "อื่นๆ"),
+  ];
+
+  List<DropdownMenuItem<ListItem>> _dropdownSosItems;
+  List<DropdownMenuItem<ListItem>> _dropdownMenuItems;
+  List<DropdownMenuItem<ListItem>> _dropdownProvinceItems;
+  ListItem _selectedTypeItem, _selectedProvicne, _selectedSosItem;
+
+  @override
   void initState() {
     super.initState();
     _dropdownMenuItems = buildDropDownMenuItems(_dropdownItems);
-    _selectedItem = _dropdownMenuItems[0].value;
+    _selectedTypeItem = _dropdownMenuItems[0].value;
+    _dropdownProvinceItems = buildDropDownMenuItems(_proviceList);
+    _selectedProvicne = _dropdownProvinceItems[0].value;
+    _dropdownSosItems = buildDropDownMenuItems(_sosItems);
+    _selectedSosItem = _dropdownSosItems[0].value;
   }
 
   List<DropdownMenuItem<ListItem>> buildDropDownMenuItems(List listItems) {
@@ -75,6 +117,15 @@ class _RegisterState extends State<Register> {
               buildEmail(),
               buildPassword(),
               buildType(),
+              _selectedTypeItem.value != 'User'
+                  ? buildDepartment()
+                  : Container(),
+              _selectedTypeItem.value != 'User'
+                  ? buildProvinceType()
+                  : Container(),
+              _selectedTypeItem.value != 'User'
+                  ? buildDepartmentType()
+                  : Container(),
               buildRaisedButton(),
             ],
           ),
@@ -262,28 +313,68 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  Container buildType() {
+  Widget buildType() {
     return Container(
       margin: EdgeInsets.only(top: 16, bottom: 16),
       child: DropdownButton<ListItem>(
         hint: Text('User'),
-        value: _selectedItem,
+        value: _selectedTypeItem,
         items: _dropdownMenuItems,
         onChanged: (value) {
           setState(() {
-            _selectedItem = value;
+            _selectedTypeItem = value;
             type = value.value.trim();
           });
         },
       ),
-      // child: TextField(
-      //   onChanged: (value) => type = value.trim(),
-      //   decoration: InputDecoration(
-      //     border: OutlineInputBorder(),
-      //     labelText: 'Type :',
-      //     suffixIcon: Icon(Icons.description),
-      //   ),
-      // ),
+    );
+  }
+
+  Widget buildDepartment() {
+    return Container(
+      margin: EdgeInsets.only(top: 16, bottom: 16),
+      child: TextField(
+        onChanged: (value) => department = value.trim(),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: 'Department :',
+          suffixIcon: Icon(Icons.lock),
+        ),
+      ),
+    );
+  }
+
+  Widget buildProvinceType() {
+    return Container(
+      margin: EdgeInsets.only(top: 16, bottom: 16),
+      child: DropdownButton<ListItem>(
+        hint: Text('Province'),
+        value: _selectedProvicne,
+        items: _dropdownProvinceItems,
+        onChanged: (value) {
+          setState(() {
+            _selectedProvicne = value;
+            province = value.value.trim();
+          });
+        },
+      ),
+    );
+  }
+
+  Widget buildDepartmentType() {
+    return Container(
+      margin: EdgeInsets.only(top: 16, bottom: 16),
+      child: DropdownButton<ListItem>(
+        hint: Text('Department Type'),
+        value: _selectedSosItem,
+        items: _dropdownSosItems,
+        onChanged: (value) {
+          setState(() {
+            _selectedSosItem = value;
+            sosDepartment = value.value.trim();
+          });
+        },
+      ),
     );
   }
 
@@ -318,11 +409,19 @@ class _RegisterState extends State<Register> {
         userdata['Password'] = password;
         userdata['Type'] = type;
 
+        if (type == 'SOS') {
+          userdata['department'] = department;
+          userdata['province'] = province;
+          userdata['department_type'] = sosDepartment;
+        }
+
         await FirebaseFirestore.instance
             .collection('User')
             .doc(uid)
             .set(userdata)
-            .then((value) => Navigator.pop(context));
+            .then(
+              (value) => Navigator.pop(context),
+            );
       });
     }).catchError((value) {
       normalDialod(context, value.message);

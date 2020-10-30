@@ -32,11 +32,11 @@ class _MainUserState extends State<MainUser> {
 
   Future<void> readUserData(AppModel user) async {
     await Firebase.initializeApp().then((value) async {
-      print('***** INITIAL sUCCESS ******');
-      await FirebaseAuth.instance.authStateChanges().listen((event) async {
+      print('***** INITIAL SUCCESS ******');
+      FirebaseAuth.instance.authStateChanges().listen((event) async {
         String uid = event.uid;
         print('uid = $uid');
-        await FirebaseFirestore.instance
+        FirebaseFirestore.instance
             .collection('User')
             .doc(uid)
             .snapshots()
@@ -161,7 +161,7 @@ class _MainUserState extends State<MainUser> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 FlatButton(
-                  onPressed: () => Navigator.push(
+                  onPressed: () => Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (_) => AdsRequest(),
@@ -188,7 +188,7 @@ class _MainUserState extends State<MainUser> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   GestureDetector(
-                    onTap: () => Navigator.push(
+                    onTap: () => Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (_) => HelpMe()),
                     ),
@@ -228,9 +228,16 @@ class _MainUserState extends State<MainUser> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 FlatButton(
-                  onPressed: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => UserProfile())),
-                  child: Icon(Icons.people, color: Colors.yellow),
+                  onPressed: () => Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => UserProfile(),
+                    ),
+                  ),
+                  child: Icon(
+                    Icons.people,
+                    color: Colors.yellow,
+                  ),
                 ),
                 Container(),
                 FlatButton(

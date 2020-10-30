@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:tongmoopa/utlity/search_section.dart';
 import 'package:tongmoopa/widget/drawer_bar.dart';
 
@@ -9,6 +10,8 @@ class AdsRequest extends StatelessWidget {
   final TextEditingController messageController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Widget formData() {
     return Form(
@@ -69,7 +72,7 @@ class AdsRequest extends StatelessWidget {
                 }
                 return message;
               },
-              onSaved: (value) => print(value),
+              onSaved: (value) => {},
             ),
           ],
         ),
@@ -77,15 +80,37 @@ class AdsRequest extends StatelessWidget {
     );
   }
 
-  void validate() {
+  Future<void> validate() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
+      print(messageController.text);
+      final Email email = Email(
+        subject: nameController.text,
+        body:
+            '${messageController.text} from ${emailController.text} : ${telephoneController.text}',
+        recipients: ['sawasdeepeemai555@gmail.com'],
+        isHTML: false,
+      );
+
+      String platformResponse;
+
+      try {
+        await FlutterEmailSender.send(email);
+        platformResponse = 'success';
+      } catch (error) {
+        platformResponse = error.toString();
+      }
+
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text(platformResponse),
+      ));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text(
           'Ads Request',

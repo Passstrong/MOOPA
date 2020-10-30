@@ -15,7 +15,9 @@ class AppDrawerHeader extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      currentAccountPicture: Image.asset('images/theone.jpg'),
+      currentAccountPicture: user.imageProfile.isNotEmpty
+          ? Image.network(user.imageProfile)
+          : Image.asset('images/theone.jpg'),
       accountName: Text(
         user.username ?? '',
         style: TextStyle(color: Colors.blue[900]),
