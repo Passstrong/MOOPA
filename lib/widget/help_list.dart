@@ -1,10 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:tongmoopa/utlity/scoped_models/app_model.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -12,7 +9,7 @@ class HelpMeList extends StatefulWidget {
   @override
   _HelpMeListState createState() => _HelpMeListState();
 }
-
+ 
 class _HelpMeListState extends State<HelpMeList> {
   AppModel user;
   Timer timer;
