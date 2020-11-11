@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
     return ScopedModel<AppModel>(
       model: model,
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Authen(),
         theme: ThemeData(
           primarySwatch: Colors.blue,

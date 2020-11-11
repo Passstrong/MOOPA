@@ -15,11 +15,12 @@ class MyStyle {
                   (value) async {
                     await FirebaseAuth.instance.signOut().then(
                           (value) => Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Authen(),
-                              ),
-                              (route) => false),
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Authen(),
+                            ),
+                            (route) => false,
+                          ),
                         );
                   },
                 );

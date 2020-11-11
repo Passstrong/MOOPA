@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1001335641808-7vggf4sfiobpfa77k7uee62rn94hk25d.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1001335641808-7vggf4sfiobpfa77k7uee62rn94hk25d</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1001335641808-1nqsdepnpgafboi5c4rqdclehcgke89g.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCRJPEmagSmFZmOjoCgrqfhPwjTRlcOpuE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1001335641808</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.flutterthailand.tongmoopa</string>
+	<key>PROJECT_ID</key>
+	<string>moopa-f0605</string>
+	<key>STORAGE_BUCKET</key>
+	<string>moopa-f0605.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1001335641808:ios:348d2ad2ce8f3f3de930d5</string>
+	<key>DATABASE_URL</key>
+	<string>https://moopa-f0605.firebaseio.com</string>
+</dict>
+</plist>

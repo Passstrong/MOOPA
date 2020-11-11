@@ -34,21 +34,24 @@ class _MainUserState extends State<MainUser> {
     await Firebase.initializeApp().then((value) async {
       print('***** INITIAL SUCCESS ******');
       FirebaseAuth.instance.authStateChanges().listen((event) async {
-        String uid = event.uid;
-        print('uid = $uid');
-        FirebaseFirestore.instance
-            .collection('User')
-            .doc(uid)
-            .snapshots()
-            .listen((event) {
-          user.setName(event.data()['Name']);
-          user.setEmail(event.data()['Email']);
-          user.setBirth(event.data()['Birth']);
-          user.setGender(event.data()['Gender']);
-          user.setLastName(event.data()['LastName']);
-          user.setAge(event.data()['Age']);
-          user.setImage(event.data()['UrlAvatar']);
-        });
+        print(event);
+        if (event != null) {
+          String uid = event.uid;
+          print('uid = $uid');
+          FirebaseFirestore.instance
+              .collection('User')
+              .doc(uid)
+              .snapshots()
+              .listen((event) {
+            user.setName(event.data()['Name']);
+            user.setEmail(event.data()['Email']);
+            user.setBirth(event.data()['Birth']);
+            user.setGender(event.data()['Gender']);
+            user.setLastName(event.data()['LastName']);
+            user.setAge(event.data()['Age']);
+            user.setImage(event.data()['UrlAvatar']);
+          });
+        }
       });
     });
   }
@@ -72,39 +75,42 @@ class _MainUserState extends State<MainUser> {
             child: Container(
               margin: EdgeInsets.all(5.0),
               child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                  child: Stack(
-                    children: <Widget>[
-                      Image.network(item, fit: BoxFit.cover, width: 1000.0),
-                      Positioned(
-                        bottom: 0.0,
-                        left: 0.0,
-                        right: 0.0,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Color.fromARGB(200, 0, 0, 0),
-                                Color.fromARGB(0, 0, 0, 0)
-                              ],
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                            ),
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                child: Stack(
+                  children: <Widget>[
+                    Image.network(item, fit: BoxFit.cover, width: 1000.0),
+                    Positioned(
+                      bottom: 0.0,
+                      left: 0.0,
+                      right: 0.0,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color.fromARGB(200, 0, 0, 0),
+                              Color.fromARGB(0, 0, 0, 0)
+                            ],
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
                           ),
-                          padding: EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 20.0),
-                          child: Text(
-                            'No. ${imgList.indexOf(item)} image',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          vertical: 10.0,
+                          horizontal: 20.0,
+                        ),
+                        child: Text(
+                          'No. ${imgList.indexOf(item)} image',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                    ],
-                  )),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         )
@@ -190,7 +196,9 @@ class _MainUserState extends State<MainUser> {
                   GestureDetector(
                     onTap: () => Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (_) => HelpMe()),
+                      MaterialPageRoute(
+                        builder: (_) => HelpMe(),
+                      ),
                     ),
                     child: Container(
                       width: 200,
