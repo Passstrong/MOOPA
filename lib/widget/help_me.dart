@@ -4,24 +4,21 @@ import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:toast/toast.dart';
 import 'package:tongmoopa/model/list_item.dart';
 import 'package:tongmoopa/utlity/scoped_models/app_model.dart';
 import 'package:tongmoopa/utlity/search_section.dart';
 import 'package:tongmoopa/widget/drawer_bar.dart';
-import 'package:tongmoopa/widget/help_list.dart';
 
 class HelpMe extends StatefulWidget {
   @override
   _HelpMeState createState() => _HelpMeState();
 }
-
 
 class _HelpMeState extends State<HelpMe> {
   TextEditingController emailController = TextEditingController();
@@ -51,21 +48,13 @@ class _HelpMeState extends State<HelpMe> {
 
   Completer<GoogleMapController> _controller = Completer();
 
-
   void initState() {
     super.initState();
     _dropdownMenuItems = buildDropDownMenuItems(_dropdownItems);
-    _selectedItem = _dropdownMenuItems[1].value; //*** TouYunG
+    _selectedItem = _dropdownMenuItems[1].value;
     telephoneController.text = '1234567890'; //*** TouYunG
     getLocation();
   }
-
-
-  // void initState() {
-  //   super.initState();
-  //   _dropdownMenuItems = buildDropDownMenuItems(_dropdownItems);
-  //   _selectedItem = _dropdownMenuItems[0].value;
-  // }
 
   Future getImageCamera() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
@@ -125,7 +114,7 @@ class _HelpMeState extends State<HelpMe> {
       CameraUpdate.newCameraPosition(
         CameraPosition(
           target: LatLng(user.latittude, user.longittude),
-          zoom: 14.4746,// zoom: 19,
+          zoom: 14.4746, // zoom: 19,
         ),
       ),
     );
@@ -141,10 +130,14 @@ class _HelpMeState extends State<HelpMe> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Email:'),
+            Text(
+              'Email:',
+              style: TextStyle(
+                color: Colors.yellow,
+              ),
+            ),
             TextFormField(
               initialValue: user.userEmail,
-              // controller: emailController,
               validator: (value) {
                 String message;
                 if (value == null || value.isEmpty) {
@@ -156,7 +149,12 @@ class _HelpMeState extends State<HelpMe> {
                 value.trim(),
               ),
             ),
-            Text('Tel:'),
+            Text(
+              'Tel:',
+              style: TextStyle(
+                color: Colors.yellow,
+              ),
+            ),
             TextFormField(
               keyboardType: TextInputType.phone,
               controller: telephoneController,
@@ -169,7 +167,12 @@ class _HelpMeState extends State<HelpMe> {
               },
               onSaved: (value) => user.setTelephone(value.trim()),
             ),
-            Text('Real Pic:'),
+            Text(
+              'Real Pic:',
+              style: TextStyle(
+                color: Colors.yellow,
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -287,10 +290,8 @@ class _HelpMeState extends State<HelpMe> {
 
   Future<Null> registerHelpMe() async {
     final user = ScopedModel.of<AppModel>(context, rebuildOnChange: false);
-    print('user : ${user.userEmail} ${user.latittude} ${user.longittude}');
 
     String email = user.userEmail;
-    print('userEmail ==>> ${user.userEmail}');
     String filename = 'HelpME/' +
         email +
         DateFormat('_yyyy-MM-dd_HH-mm-ss').format(DateTime.now()) +
@@ -302,12 +303,12 @@ class _HelpMeState extends State<HelpMe> {
     Map<String, dynamic> userdata = Map();
     userdata['UrlAvatar'] = urlAvatar;
     userdata['Email'] = email;
-    userdata['Tel'] = telephoneController.text;
+    userdata['Tel'] = user.telephone;
     userdata['Group'] = _selectedItem.value;
+    userdata['GroupName'] = _selectedItem.name;
     userdata['Latitude'] = user.latittude;
     userdata['Longittude'] = user.longittude;
     userdata['Status'] = 0;
-    print('userdata $userdata');
 
     await FirebaseFirestore.instance
         .collection('HelpME')
@@ -315,12 +316,7 @@ class _HelpMeState extends State<HelpMe> {
         .set(userdata)
         .then((value) {
       Navigator.pop(context);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => HelpMeList(),
-        ),
-      );
+      Toast.show('ส่งคำร้อง เรียบร้อยแล้ว', context);
     });
   }
 
@@ -350,5 +346,4 @@ class _HelpMeState extends State<HelpMe> {
       ),
     );
   }
-  
 }

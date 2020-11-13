@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../widget/main_user.dart';
+import 'package:tongmoopa/widget/main_user.dart';
 
 class SearchHome extends StatelessWidget {
-  const SearchHome({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -35,7 +32,7 @@ class SearchHome extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             FlatButton(
-              onPressed: () => Navigator.pushReplacement(
+              onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (_) => MainUser(),

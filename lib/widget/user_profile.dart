@@ -59,7 +59,9 @@ class _UserProfileState extends State<UserProfile> {
               .collection('User')
               .doc(uid)
               .set(userdata)
-              .then((value) => Navigator.pop(context));
+              .then(
+                (value) => Navigator.pop(context),
+              );
         });
       }).catchError((value) {
         normalDialod(context, value.message);

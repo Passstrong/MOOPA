@@ -7,9 +7,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tongmoopa/utlity/normal_dialog.dart';
-import 'package:tongmoopa/model/list_item_str.dart';
 
-import '../model/list_item_str.dart';
+import '../model/list_item.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -32,104 +31,105 @@ class _RegisterState extends State<Register> {
       sosDepartment,
       type = 'User';
 
+  int sosDepartmentNo;
+
   List<ListItem> _dropdownItems = [
-    ListItem("User", "User"),
-    ListItem("SOS", "SOS"),
+    ListItem(0, "User"),
+    ListItem(1, "SOS"),
   ];
 
   List<ListItem> _proviceList = [
-    ListItem("กรุงเทพ", "กรุงเทพ"),
-    ListItem("กระบี่", "กระบี่"),
-    ListItem("กาญจนบุรี", "กาญจนบุรี"),
-    ListItem("กาฬสินธุ์", "กาฬสินธุ์"),
-    ListItem(" กำแพงเพชร", " กำแพงเพชร"),
-    ListItem("ขอนแก่น", "ขอนแก่น"),
-    ListItem("จันทบุรี", "จันทบุรี"),
-    ListItem("ฉะเชิงเทรา", "ฉะเชิงเทรา"),
-    ListItem("ชลบุรี", "ชลบุรี"),
-    ListItem("ชัยนาท", "ชัยนาท"),
-    ListItem("ชัยภูมิ", "ชัยภูมิ"),
-    ListItem("ชุมพร", "ชุมพร"),
-    ListItem("เชียงราย", "เชียงราย"),
-    ListItem("เชียงใหม่", "เชียงใหม่"),
-    ListItem("ตรัง", "ตรัง"),
-    ListItem("ตราด", "ตราด"),
-    ListItem("ตาก", "ตาก"),
-    ListItem("นครนายก", "นครนายก"),
-    ListItem("นครปฐม", "นครปฐม"),
-    ListItem("นครพนม", "นครพนม"),
-    ListItem("นครราชสีมา", "นครราชสีมา"),
-    ListItem("นครศรีธรรมราช", "นครศรีธรรมราช"),
-    ListItem("นครสวรรค์", "นครสวรรค์"),
-    ListItem("นนทบุรี", "นนทบุรี"),
-    ListItem("นราธิวาส", "นราธิวาส"),
-    ListItem("น่าน", "น่าน"),
-    ListItem("หนองคาย", "หนองคาย"),
-    ListItem("หนองบัวลำภู", "หนองบัวลำภู"),
-    ListItem("บึงกาฬ", "บึงกาฬ"),
-    ListItem("บุรีรัมย์", "บุรีรัมย์"),
-    ListItem("ปทุมธานี", "ปทุมธานี"),
-    ListItem("ประจวบคีรีขันธ์", "ประจวบคีรีขันธ์"),
-    ListItem("ปราจีนบุรี", "ปราจีนบุรี"),
-    ListItem("ปัตตานี", "ปัตตานี"),
-    ListItem("พระนครศรีอยุธยา", "พระนครศรีอยุธยา"),
-    ListItem("พังงา", "พังงา"),
-    ListItem("พัทลุง", "พัทลุง"),
-    ListItem("พิจิตร", "พิจิตร"),
-    ListItem("พิษณุโลก", "พิษณุโลก"),
-    ListItem("เพชรบุรี", "เพชรบุรี"),
-    ListItem("เพชรบูรณ์", "เพชรบูรณ์"),
-    ListItem("แพร่", "แพร่"),
-    ListItem("พะเยา", "พะเยา"),
-    ListItem("ภูเก็ต", "ภูเก็ต"),
-    ListItem("มหาสารคาม", "มหาสารคาม"),
-    ListItem("แม่ฮ่องสอน", "แม่ฮ่องสอน"),
-    ListItem("มุกดาหาร", "มุกดาหาร"),
-    ListItem("ยะลา", "ยะลา"),
-    ListItem("ยโสธร", "ยโสธร"),
-    ListItem("ร้อยเอ็ด", "ร้อยเอ็ด"),
-    ListItem("ระนอง", "ระนอง"),
-    ListItem("ระยอง", "ระยอง"),
-    ListItem("ราชบุรี", "ราชบุรี"),
-    ListItem("ลพบุรี", "ลพบุรี"),
-    ListItem("ลำปาง", "ลำปาง"),
-    ListItem("ลำพูน", "ลำพูน"),
-    ListItem("เลย", "เลย"),
-    ListItem("ศรีสะเกษ", "ศรีสะเกษ"),
-    ListItem("สกลนคร", "สกลนคร"),
-    ListItem("สงขลา", "สงขลา"),
-    ListItem("สตูล", "สตูล"),
-    ListItem("สมุทรปราการ", "สมุทรปราการ"),
-    ListItem("สมุทรสงคราม", "สมุทรสงคราม"),
-    ListItem("สมุทรสาคร", "สมุทรสาคร"),
-    ListItem("สระแก้ว", "สระแก้ว"),
-    ListItem("สระบุรี", "สระบุรี"),
-    ListItem("สิงห์บุรี", "สิงห์บุรี"),
-    ListItem("สุโขทัย", "สุโขทัย"),
-    ListItem("สุพรรณบุรี", "สุพรรณบุรี"),
-    ListItem("สุราษฎร์ธานี", "สุราษฎร์ธานี"),
-    ListItem("สุรินทร์", "สุรินทร์"),
-    ListItem("อ่างทอง", "อ่างทอง"),
-    ListItem("อุดรธานี", "อุดรธานี"),
-    ListItem("อุทัยธานี", "อุทัยธานี"),
-    ListItem("อุตรดิตถ์", "อุตรดิตถ์"),
-    ListItem("อุบลราชธานี", "อุบลราชธานี"),
-    ListItem("อำนาจเจริญ", "อำนาจเจริญ"),
+    ListItem(1, "กรุงเทพ"),
+    ListItem(2, "กระบี่"),
+    ListItem(3, "กาญจนบุรี"),
+    ListItem(4, "กาฬสินธุ์"),
+    ListItem(5, " กำแพงเพชร"),
+    ListItem(6, "ขอนแก่น"),
+    ListItem(7, "จันทบุรี"),
+    ListItem(8, "ฉะเชิงเทรา"),
+    ListItem(9, "ชลบุรี"),
+    ListItem(10, "ชัยนาท"),
+    ListItem(11, "ชัยภูมิ"),
+    ListItem(12, "ชุมพร"),
+    ListItem(13, "เชียงราย"),
+    ListItem(14, "เชียงใหม่"),
+    ListItem(15, "ตรัง"),
+    ListItem(16, "ตราด"),
+    ListItem(17, "ตาก"),
+    ListItem(18, "นครนายก"),
+    ListItem(19, "นครปฐม"),
+    ListItem(20, "นครพนม"),
+    ListItem(21, "นครราชสีมา"),
+    ListItem(22, "นครศรีธรรมราช"),
+    ListItem(23, "นครสวรรค์"),
+    ListItem(24, "นนทบุรี"),
+    ListItem(25, "นราธิวาส"),
+    ListItem(26, "น่าน"),
+    ListItem(27, "หนองคาย"),
+    ListItem(28, "หนองบัวลำภู"),
+    ListItem(29, "บึงกาฬ"),
+    ListItem(30, "บุรีรัมย์"),
+    ListItem(31, "ปทุมธานี"),
+    ListItem(32, "ประจวบคีรีขันธ์"),
+    ListItem(33, "ปราจีนบุรี"),
+    ListItem(34, "ปัตตานี"),
+    ListItem(35, "พระนครศรีอยุธยา"),
+    ListItem(36, "พังงา"),
+    ListItem(37, "พัทลุง"),
+    ListItem(38, "พิจิตร"),
+    ListItem(39, "พิษณุโลก"),
+    ListItem(40, "เพชรบุรี"),
+    ListItem(41, "เพชรบูรณ์"),
+    ListItem(42, "แพร่"),
+    ListItem(43, "พะเยา"),
+    ListItem(44, "ภูเก็ต"),
+    ListItem(45, "มหาสารคาม"),
+    ListItem(46, "แม่ฮ่องสอน"),
+    ListItem(47, "มุกดาหาร"),
+    ListItem(48, "ยะลา"),
+    ListItem(49, "ยโสธร"),
+    ListItem(50, "ร้อยเอ็ด"),
+    ListItem(51, "ระนอง"),
+    ListItem(52, "ระยอง"),
+    ListItem(53, "ราชบุรี"),
+    ListItem(54, "ลพบุรี"),
+    ListItem(55, "ลำปาง"),
+    ListItem(56, "ลำพูน"),
+    ListItem(57, "เลย"),
+    ListItem(58, "ศรีสะเกษ"),
+    ListItem(59, "สกลนคร"),
+    ListItem(60, "สงขลา"),
+    ListItem(61, "สตูล"),
+    ListItem(62, "สมุทรปราการ"),
+    ListItem(63, "สมุทรสงคราม"),
+    ListItem(64, "สมุทรสาคร"),
+    ListItem(65, "สระแก้ว"),
+    ListItem(66, "สระบุรี"),
+    ListItem(67, "สิงห์บุรี"),
+    ListItem(68, "สุโขทัย"),
+    ListItem(69, "สุพรรณบุรี"),
+    ListItem(70, "สุราษฎร์ธานี"),
+    ListItem(71, "สุรินทร์"),
+    ListItem(72, "อ่างทอง"),
+    ListItem(73, "อุดรธานี"),
+    ListItem(74, "อุทัยธานี"),
+    ListItem(75, "อุตรดิตถ์"),
+    ListItem(76, "อุบลราชธานี"),
+    ListItem(77, "อำนาจเจริญ"),
   ];
 
   List<ListItem> _sosItems = [
-    ListItem("***กรุณาเลือกหมวดหมู่***", "***กรุณาเลือกหมวดหมู่***"),
-    ListItem("แจ้งความตำรวจ", "แจ้งความตำรวจ"),
-    ListItem("รถพยาบาล", "รถพยาบาล"),
-    ListItem("รถดับเพลิง", "รถดับเพลิง"),
-    ListItem("ช่วยชีวิต - ทางน้ำ", "ช่วยชีวิต - ทางน้ำ"),
-    ListItem("ช่วยชีวิต - ทางบก", "ช่วยชีวิต - ทางบก"),
-    ListItem("มูลนิธิกู้ภัย", "มูลนิธิกู้ภัย"),
-    ListItem("ขอความช่วยเหลือจากคนใกล้ฉัน (5 Km)",
-        "ขอความช่วยเหลือจากคนใกล้ฉัน (5 Km)"),
-    ListItem("เรียกประกันภัย - รถยนต์", "เรียกประกันภัย - รถยนต์"),
-    ListItem("เรียกประกันภัย - สุขภาพ", "เรียกประกันภัย - สุขภาพ"),
-    ListItem("อื่นๆ", "อื่นๆ"),
+    ListItem(0, "***กรุณาเลือกหมวดหมู่***"),
+    ListItem(1, "แจ้งความตำรวจ"),
+    ListItem(2, "รถพยาบาล"),
+    ListItem(3, "รถดับเพลิง"),
+    ListItem(4, "ช่วยชีวิต - ทางน้ำ"),
+    ListItem(5, "ช่วยชีวิต - ทางบก"),
+    ListItem(6, "มูลนิธิกู้ภัย"),
+    ListItem(7, "ขอความช่วยเหลือจากคนใกล้ฉัน (5 Km)"),
+    ListItem(8, "เรียกประกันภัย - รถยนต์"),
+    ListItem(9, "เรียกประกันภัย - สุขภาพ"),
+    ListItem(10, "อื่นๆ"),
   ];
 
   List<DropdownMenuItem<ListItem>> _dropdownSosItems;
@@ -182,13 +182,13 @@ class _RegisterState extends State<Register> {
               buildEmail(),
               buildPassword(),
               buildType(),
-              _selectedTypeItem.value != 'User'
+              _selectedTypeItem.name != 'User'
                   ? buildDepartment()
                   : Container(),
-              _selectedTypeItem.value != 'User'
+              _selectedTypeItem.name != 'User'
                   ? buildProvinceType()
                   : Container(),
-              _selectedTypeItem.value != 'User'
+              _selectedTypeItem.name != 'User'
                   ? buildDepartmentType()
                   : Container(),
               buildRaisedButton(),
@@ -388,24 +388,12 @@ class _RegisterState extends State<Register> {
         onChanged: (value) {
           setState(() {
             _selectedTypeItem = value;
-            type = value.value.trim();
+            type = value.name;
           });
         },
       ),
-      // child: TextField(
-      //   onChanged: (value) => type = value.trim(),
-      //   decoration: InputDecoration(
-      //     border: OutlineInputBorder(),
-      //     labelText: 'Type :',
-      //     suffixIcon: Icon(Icons.description),
-      //   ),
-      // ),
     );
   }
-
-  
-
-
 
   Widget buildDepartment() {
     return Container(
@@ -431,7 +419,7 @@ class _RegisterState extends State<Register> {
         onChanged: (value) {
           setState(() {
             _selectedProvicne = value;
-            province = value.value.trim();
+            province = value.name;
           });
         },
       ),
@@ -448,7 +436,8 @@ class _RegisterState extends State<Register> {
         onChanged: (value) {
           setState(() {
             _selectedSosItem = value;
-            sosDepartment = value.value.trim();
+            sosDepartment = value.name;
+            sosDepartmentNo = value.value;
           });
         },
       ),
@@ -490,6 +479,7 @@ class _RegisterState extends State<Register> {
           userdata['department'] = department;
           userdata['province'] = province;
           userdata['department_type'] = sosDepartment;
+          userdata['department_number'] = sosDepartmentNo;
         }
 
         await FirebaseFirestore.instance

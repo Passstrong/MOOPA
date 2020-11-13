@@ -21,6 +21,8 @@ class AppModel extends Model {
 
   double _longtitude = 0.0;
 
+  int _departmentNumber = 0;
+
   String get username => _name;
 
   String get userLastname => _lastname;
@@ -40,6 +42,8 @@ class AppModel extends Model {
   double get latittude => _latitude;
 
   double get longittude => _longtitude;
+
+  int get department => _departmentNumber;
 
   void setName(String name) {
     this._name = name;
@@ -88,6 +92,11 @@ class AppModel extends Model {
 
   void setLocationLong(double longtitude) {
     this._longtitude = longtitude;
+    notifyListeners();
+  }
+
+  void setDepartmentNumber(int departmentNumber) {
+    this._departmentNumber = departmentNumber;
     notifyListeners();
   }
 }
