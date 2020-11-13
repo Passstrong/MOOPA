@@ -382,7 +382,7 @@ class _RegisterState extends State<Register> {
     return Container(
       margin: EdgeInsets.only(top: 16, bottom: 16),
       child: DropdownButton<ListItem>(
-        hint: Text('User'),
+        hint: Text('USER (class People)'),
         value: _selectedTypeItem,
         items: _dropdownMenuItems,
         onChanged: (value) {
@@ -392,8 +392,20 @@ class _RegisterState extends State<Register> {
           });
         },
       ),
+      // child: TextField(
+      //   onChanged: (value) => type = value.trim(),
+      //   decoration: InputDecoration(
+      //     border: OutlineInputBorder(),
+      //     labelText: 'Type :',
+      //     suffixIcon: Icon(Icons.description),
+      //   ),
+      // ),
     );
   }
+
+  
+
+
 
   Widget buildDepartment() {
     return Container(

@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:toast/toast.dart';
-
+import 'package:tongmoopa/widget/sos_detail.dart';
+import 'package:flutter/widgets.dart';
 import 'package:tongmoopa/utlity/scoped_models/app_model.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:tongmoopa/utlity/my_style.dart';
@@ -16,6 +19,8 @@ class MainSOS extends StatefulWidget {
 }
 
 class _MainSOSState extends State<MainSOS> {
+  
+  AppModel user;
   Timer timer;
   List<QueryDocumentSnapshot> list;
   Completer<GoogleMapController> _controller = Completer();
@@ -23,10 +28,25 @@ class _MainSOSState extends State<MainSOS> {
   @override
   void initState() {
     super.initState();
+    user = ScopedModel.of<AppModel>(context, rebuildOnChange: false);
     getLocation();
     checkHelpMeList();
     timer =
         Timer.periodic(Duration(seconds: 5), (Timer t) => checkHelpMeList());
+        // Future.delayed(Duration(milliseconds: 0), () async {
+        //if (list != null && list.isNotEmpty) {
+        //     final GoogleMapController controller = await _controller.future;
+        //     controller.animateCamera(
+    //       CameraUpdate.newCameraPosition(
+    //         CameraPosition(
+    //           target: LatLng(list['Latittude'], list['Longittude']),
+    //           // zoom: 14.4746,
+    //           zoom: 19,
+    //         ),
+    //       ),
+    //     );
+    //   }
+    // });
   }
 
   @override
