@@ -40,7 +40,7 @@ class _MainSOSState extends State<MainSOS> {
     await FirebaseFirestore.instance
         .collection('HelpME')
         .where('Group', isEqualTo: user.department)
-        .where('Status', isEqualTo: 1)
+        .where('Status', isEqualTo: 0)
         .get()
         .then((querySnapshot) {
       if (querySnapshot.docs.length > 0) {
